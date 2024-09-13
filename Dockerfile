@@ -1,5 +1,5 @@
 # Build the source
-FROM docker.io/library/node:18.14.1-alpine@sha256:045b1a1c90bdfd8fcaad0769922aa16c401e31867d8bf5833365b0874884bbae as builder
+FROM docker.io/library/node:18.14.1-alpine@sha256:045b1a1c90bdfd8fcaad0769922aa16c401e31867d8bf5833365b0874884bbae AS builder
 
 WORKDIR /code
 
@@ -25,13 +25,21 @@ RUN find . -type f "(" \
       ")" -print0 \
       | xargs -0 -n 1 gzip -kf
 
-# new MIP alpine nginx
+# new MIP alpine nginx image
 FROM mip-sf-harbor.med.osd.ds/mip-sf/alpine-nginx-main:latest
+
+LABEL org.opencontainers.image.title="OHDSI-Atlas"
+LABEL org.opencontainers.image.authors="Joris Borgdorff <joris@thehyve.nl>, Lee Evans - www.ltscomputingllc.com, Shaun Turner<shaun.turner1@nhs.net>"
+LABEL org.opencontainers.image.description="ATLAS is an open source software tool for researchers to \
+conduct scientific analyses on standardized observational data"
+LABEL org.opencontainers.image.licenses="Apache-2.0"
+LABEL org.opencontainers.image.vendor="OHDSI"
+LABEL org.opencontainers.image.source="https://github.com/OHDSI/Atlas"
 
 # URL where WebAPI can be queried by the client
 ENV USE_DYNAMIC_WEBAPI_URL="false"
 ENV DYNAMIC_WEBAPI_SUFFIX="/WebAPI/"
-ENV WEBAPI_URL="http://localhost:8080/WebAPI/"
+ENV WEBAPI_URL="http://localhost:8081/WebAPI/"
 ENV CONFIG_PATH="/etc/atlas/config-local.js"
 ENV ATLAS_INSTANCE_NAME="OHDSI"
 ENV ATLAS_COHORT_COMPARISON_RESULTS_ENABLED="false"
@@ -55,13 +63,13 @@ ENV ATLAS_COMPANYINFO_SHOW="true"
 ENV ATLAS_DEFAULT_LOCALE="en"
 
 ENV ATLAS_SECURITY_WIN_PROVIDER_ENABLED="false"
-ENV ATLAS_SECURITY_WIN_PROVIDER_NAME="Windows"
+ENV ATLAS_SECURITY_WIN_PROVIDER_NAME="Windows"
 ENV ATLAS_SECURITY_WIN_PROVIDER_URL="user/login/windows"
 ENV ATLAS_SECURITY_WIN_PROVIDER_AJAX="true"
 ENV ATLAS_SECURITY_WIN_PROVIDER_ICON="fab fa-windows"
 
 ENV ATLAS_SECURITY_KERB_PROVIDER_ENABLED="false"
-ENV ATLAS_SECURITY_KERB_PROVIDER_NAME="Kerberos"
+ENV ATLAS_SECURITY_KERB_PROVIDER_NAME="Kerberos"
 ENV ATLAS_SECURITY_KERB_PROVIDER_URL="user/login/kerberos"
 ENV ATLAS_SECURITY_KERB_PROVIDER_AJAX="true"
 ENV ATLAS_SECURITY_KERB_PROVIDER_ICON="fab fa-windows"
@@ -145,3 +153,5 @@ COPY --from=builder /code/js /usr/share/nginx/html/atlas/js
 # Load Atlas local config with current user, so it can be modified
 # with env substitution
 COPY --chown=101 docker/config-local.js /usr/share/nginx/html/atlas/js/config-local.js
+
+USER nginx
