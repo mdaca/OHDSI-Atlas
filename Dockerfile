@@ -1,5 +1,5 @@
 # Build the source
-FROM docker.io/library/node:18.14.1-alpine@sha256:045b1a1c90bdfd8fcaad0769922aa16c401e31867d8bf5833365b0874884bbae AS builder
+FROM docker.io/library/node:current-alpine3.20 AS builder
 
 WORKDIR /code
 
