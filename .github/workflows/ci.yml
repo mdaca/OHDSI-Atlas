@@ -92,7 +92,7 @@ jobs:
           AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
           AWS_REGION: ${{ secrets.AWS_REGION }}
           IMAGE_TAG: 2.14.1
-          ECR_REPOSITORY: mdaca/ohdsi/wmdaca/ohdsi/atlas
+          ECR_REPOSITORY: mdaca/ohdsi/atlas
         run: |
           syft $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$ECR_REPOSITORY:$IMAGE_TAG
           syft $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$ECR_REPOSITORY:$IMAGE_TAG  > OHDSI-ATLAS-sbom.tf
