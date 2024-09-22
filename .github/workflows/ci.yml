@@ -41,6 +41,12 @@ jobs:
           # Push the Docker image
           docker push $REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
 
+          # Add latest tag
+          docker tag $REGISTRY/$REPOSITORY:$IMAGE_TAG $REGISTRY/$REPOSITORY:latest
+
+          # push latest Docker Image
+          docker push $REGISTRY/$REPOSITORY:latest
+
 
   security:
     runs-on: ubuntu-latest
@@ -81,8 +87,9 @@ jobs:
           IMAGE_TAG: 2.14.1
           ECR_REPOSITORY: mdaca/ohdsi/atlas
         run: |
-          trivy image --exit-code 1 --severity HIGH,CRITICAL $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$ECR_REPOSITORY:$IMAGE_TAG
-        continue-on-error: true
+          trivy image --severity HIGH,CRITICAL $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$ECR_REPOSITORY:$IMAGE_TAG
+          trivy image --format json $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$ECR_REPOSITORY:$IMAGE_TAG > OHDSI-Atlas.json
+          jq -r '.Results[] | select(.Vulnerabilities != null) | .Vulnerabilities[] | [.SeveritySource, .VulnerabilityID, .PkgName, .PkgPath, .InstalledVersion, .FixedVersion, .Status, .Severity] | @csv' OHDSI-Atlas.json > OHDSI-Atlas-Trivy.csv
       - name: Install Syft
         run: |
           curl -sSfL https://raw.githubusercontent.com/anchore/syft/main/install.sh | sudo sh -s -- -b /usr/local/bin
@@ -97,8 +104,10 @@ jobs:
           syft $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$ECR_REPOSITORY:$IMAGE_TAG
           syft $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$ECR_REPOSITORY:$IMAGE_TAG  > OHDSI-ATLAS-sbom.tf
 
-      - name: Upload SBOM
-        uses: actions/upload-artifact@v3
+      - name: Upload Reports
+        uses: actions/upload-artifact@v4
         with:
-          name: sbom
-          path: OHDSI-ATLAS-sbom.tf
+          name: trivy-and-sbom-reports
+          path: |
+            OHDSI-Atlas-Trivy.csv
+            OHDSI-Atlas-sbom.tf
