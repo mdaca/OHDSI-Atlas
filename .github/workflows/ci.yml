@@ -102,7 +102,7 @@ jobs:
           ECR_REPOSITORY: mdaca/ohdsi/atlas
         run: |
           syft $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$ECR_REPOSITORY:$IMAGE_TAG
-          syft $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$ECR_REPOSITORY:$IMAGE_TAG  > OHDSI-ATLAS-sbom.tf
+          syft $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$ECR_REPOSITORY:$IMAGE_TAG  > OHDSI-Atlas-sbom.tf
 
       - name: Upload Reports
         uses: actions/upload-artifact@v4
