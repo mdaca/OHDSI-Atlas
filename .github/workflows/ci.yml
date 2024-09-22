@@ -42,10 +42,10 @@ jobs:
           docker push $REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
 
           # Add latest tag
-          docker tag $REGISTRY/$REPOSITORY:$IMAGE_TAG $REGISTRY/$REPOSITORY:latest
+          docker tag $REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG $REGISTRY/$ECR_REPOSITORY:latest
 
-          # push latest Docker Image
-          docker push $REGISTRY/$REPOSITORY:latest
+          # Push latest Docker Image
+          docker push $REGISTRY/$ECR_REPOSITORY:latest
 
 
   security:
