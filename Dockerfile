@@ -1,5 +1,5 @@
 # Build the source
-FROM docker.io/library/node:18.14.1-alpine@sha256:045b1a1c90bdfd8fcaad0769922aa16c401e31867d8bf5833365b0874884bbae AS builder
+FROM docker.io/library/node:current-alpine3.20 AS builder
 
 WORKDIR /code
 
@@ -26,12 +26,11 @@ RUN find . -type f "(" \
       | xargs -0 -n 1 gzip -kf
 
 # new MIP alpine nginx image
-FROM mip-sf-harbor.med.osd.ds/mip-sf/alpine-nginx-main:latest
+FROM 201959883603.dkr.ecr.us-east-2.amazonaws.com/mdaca/base-images/ironbank-alpine-nginx:1.26.2_3.20.2
 
 LABEL org.opencontainers.image.title="OHDSI-Atlas"
 LABEL org.opencontainers.image.authors="Joris Borgdorff <joris@thehyve.nl>, Lee Evans - www.ltscomputingllc.com, Shaun Turner<shaun.turner1@nhs.net>"
-LABEL org.opencontainers.image.description="ATLAS is an open source software tool for researchers to \
-conduct scientific analyses on standardized observational data"
+LABEL org.opencontainers.image.description="ATLAS is an open source software tool for researchers to conduct scientific analyses on standardized observational data"
 LABEL org.opencontainers.image.licenses="Apache-2.0"
 LABEL org.opencontainers.image.vendor="OHDSI"
 LABEL org.opencontainers.image.source="https://github.com/OHDSI/Atlas"
