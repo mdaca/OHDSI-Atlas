@@ -26,7 +26,7 @@ RUN find . -type f "(" \
       | xargs -0 -n 1 gzip -kf
 
 # new MIP alpine nginx image
-FROM 201959883603.dkr.ecr.us-east-2.amazonaws.com/mdaca/base-images/ironbank-alpine-nginx:1.26.2_3.20.2
+FROM 201959883603.dkr.ecr.us-east-2.amazonaws.com/mdaca/base-images/ironbank-alpine-nginx:1.26.2_3.20.3
 
 LABEL org.opencontainers.image.title="OHDSI-Atlas"
 LABEL org.opencontainers.image.authors="Joris Borgdorff <joris@thehyve.nl>, Lee Evans - www.ltscomputingllc.com, Shaun Turner<shaun.turner1@nhs.net>"
