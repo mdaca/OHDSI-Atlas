@@ -155,3 +155,4 @@ COPY --from=builder --chown=100 /code/js /usr/share/nginx/html/atlas/js
 COPY --chown=100 docker/config-local.js /usr/share/nginx/html/atlas/js/config-local.js
 
 USER nginx
+ENTRYPOINT ["/docker-entrypoint.d/30-atlas-env-subst.sh"]
