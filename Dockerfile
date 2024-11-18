@@ -142,8 +142,8 @@ COPY --chown=100 ./docker/optimization.conf /etc/nginx/conf.d/optimization.conf
 COPY --chown=100 ./docker/30-atlas-env-subst.sh /docker-entrypoint.d/30-atlas-env-subst.sh
 
 # Load code
-COPY ./images /usr/share/nginx/html/atlas/images
-COPY ./README.md ./LICENSE /usr/share/nginx/html/atlas/
+COPY --chown=100 ./images /usr/share/nginx/html/atlas/images
+COPY --chown=100 ./README.md ./LICENSE /usr/share/nginx/html/atlas/
 COPY --from=builder --chown=100 /code/index.html* /usr/share/nginx/html/atlas/
 COPY --from=builder --chown=100 /code/node_modules /usr/share/nginx/html/atlas/node_modules
 COPY --from=builder --chown=100 /code/js /usr/share/nginx/html/atlas/js
