@@ -26,7 +26,7 @@ RUN find . -type f "(" \
       | xargs -0 -n 1 gzip -kf
 
 # new MIP alpine nginx image
-FROM 201959883603.dkr.ecr.us-east-2.amazonaws.com/mdaca/base-images/ironbank-alpine-nginx:3.20.3_1.26.2
+FROM 201959883603.dkr.ecr.us-east-2.amazonaws.com/mdaca/base-images/ironbank-alpine-nginx:3.20.6_1.26.4
 USER root
 RUN apk add --no-cache gettext
 
