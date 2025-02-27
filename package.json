@@ -97,6 +97,7 @@
   },
   "overrides": {
     "d3-color": "3.1.0",
-	"rollup": "2.79.2"
+	"rollup": "2.79.2",
+	"path-to-regexp": " 0.1.12"
   }
 }
