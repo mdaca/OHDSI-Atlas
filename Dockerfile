@@ -40,7 +40,7 @@ LABEL org.opencontainers.image.source="https://github.com/OHDSI/Atlas"
 # URL where WebAPI can be queried by the client
 ENV USE_DYNAMIC_WEBAPI_URL="false"
 ENV DYNAMIC_WEBAPI_SUFFIX="/WebAPI/"
-# ENV WEBAPI_URL="http://localhost:8081/WebAPI/"
+ENV WEBAPI_URL="http://localhost:8081/WebAPI/"
 ENV CONFIG_PATH="/etc/atlas/config-local.js"
 ENV ATLAS_INSTANCE_NAME="OHDSI"
 ENV ATLAS_COHORT_COMPARISON_RESULTS_ENABLED="false"
