@@ -28,7 +28,7 @@ RUN find . -type f "(" \
 # new MIP alpine nginx image
 FROM 201959883603.dkr.ecr.us-east-2.amazonaws.com/mdaca/base-images/ironbank-alpine-nginx:3.20.6_1.26.3
 USER root
-RUN apk add --no-cache gettext
+RUN apk add --no-cache gettext iproute2
 
 LABEL org.opencontainers.image.title="OHDSI-Atlas"
 LABEL org.opencontainers.image.authors="Joris Borgdorff <joris@thehyve.nl>, Lee Evans - www.ltscomputingllc.com, Shaun Turner<shaun.turner1@nhs.net>"
