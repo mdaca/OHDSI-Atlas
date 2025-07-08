@@ -9,3 +9,4 @@ js/config-local.js
 js/version.js
 package-lock.json
 .vscode
+*.log
